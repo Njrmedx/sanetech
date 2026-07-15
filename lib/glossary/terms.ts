@@ -1,0 +1,40 @@
+/**
+ * Glossary of technical siglas + expansions for <abbr> wrapping.
+ * Used by <Abbr term="ETE" /> component to render <abbr title="..." />.
+ */
+
+export const GLOSSARY_TERMS: Record<string, string> = {
+  "CONAMA 430": "Conselho Nacional do Meio Ambiente — Resolução 430/2011 (parâmetros de lançamento de efluentes)",
+  "CONAMA": "Conselho Nacional do Meio Ambiente",
+  "ANVISA": "Agência Nacional de Vigilância Sanitária",
+  "RDC": "Resolução da Diretoria Colegiada (ANVISA)",
+  "USP": "United States Pharmacopeia",
+  "ASTM D1193": "American Society for Testing and Materials — norma D1193 (classificação de água de reagente)",
+  "ASTM": "American Society for Testing and Materials",
+  "NBR ABNT": "Norma Brasileira — Associação Brasileira de Normas Técnicas",
+  "ABNT": "Associação Brasileira de Normas Técnicas",
+  "CREA": "Conselho Regional de Engenharia e Agronomia",
+  "CONFEA": "Conselho Federal de Engenharia e Agronomia",
+  "LGPD": "Lei Geral de Proteção de Dados Pessoais (Lei 13.709/2018)",
+  "ANPD": "Autoridade Nacional de Proteção de Dados",
+  "CLSI CLRW": "Clinical and Laboratory Standards Institute — Clinical Laboratory Reagent Water",
+  "CLSI": "Clinical and Laboratory Standards Institute",
+  "ETE": "Estação de Tratamento de Esgoto",
+  "ETDI": "Estação de Tratamento de Despejo Industrial",
+  "ETEBA": "Estação de Tratamento de Efluentes Biologicamente Ativos",
+  "ETAC": "Estação de Tratamento de Águas Cinzas ou de Chuva",
+  "ETA": "Estação de Tratamento de Água",
+  "OSC": "Osmose Reversa (Reverse Osmosis)",
+  "MF": "Microfiltração",
+  "UF": "Ultrafiltração",
+  "EDI": "Eletrodesionização",
+  "DQO": "Demanda Química de Oxigênio",
+  "DBO": "Demanda Bioquímica de Oxigênio",
+  "SST": "Sólidos Suspensos Totais",
+  "TOC": "Total Organic Carbon (Carbono Orgânico Total)",
+  "CIP": "Cleaning in Place (limpeza química de membranas)",
+  "HPLC": "High Performance Liquid Chromatography",
+  "STP": "Sewage Treatment Plant",
+  "INEA": "Instituto Estadual do Ambiente (Rio de Janeiro)",
+  "IBAMA": "Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis",
+};

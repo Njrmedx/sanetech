@@ -1,0 +1,582 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* === CORES PRIMÁRIAS (oficial — DESIGN.md §3.1.1) === */
+  --color-primary-900: #24265d;
+  --color-primary-700: #2c3892;
+  --color-primary-500: #3F4FB8;
+  --color-primary-300: #5BA8D9;
+  --color-primary-100: #BFE3F2;
+  --color-primary-50:  #E8F8FF;
+
+  /* === NEUTROS (undertone azul-índigo — DESIGN.md §3.1.2) === */
+  --color-ink-900: #0E1024;
+  --color-ink-700: #3A3F66;
+  --color-ink-500: #6E739A;
+  --color-ink-300: #B5B9D1;
+  --color-ink-200: #D7DAE8;
+  --color-ink-100: #EDEFF6;
+  --color-ink-50:  #F6F7FB;
+  --color-bg:      #FAFAFC; /* tint sutil indigo (impeccable: nunca branco puro) */
+
+  /* === SEMÂNTICOS (DESIGN.md §3.1.3) === */
+  --color-success:    #1F8A52;
+  --color-success-bg: #E5F5EC;
+  --color-warning:    #B97A0A;
+  --color-warning-bg: #FBF1D9;
+  --color-danger:     #B5302A;
+  --color-danger-bg:  #FAE5E3;
+  --color-info:       var(--color-primary-700);
+  --color-info-bg:    var(--color-primary-50);
+
+  /* === GRADIENTES (DESIGN.md §3.2) === */
+  --gradient-cycle: linear-gradient(180deg, var(--color-primary-900) 0%, var(--color-primary-700) 50%, var(--color-primary-300) 100%);
+  --gradient-water: linear-gradient(135deg, var(--color-primary-50) 0%, #FFFFFF 100%);
+  --gradient-deep:  linear-gradient(180deg, var(--color-primary-700), var(--color-primary-900));
+
+  /* === TIPOGRAFIA (DESIGN.md §3.3) — variáveis injetadas pelo next/font === */
+  --font-display: var(--font-display, "Inter", system-ui, sans-serif);
+  --font-body:    var(--font-body, Arial, "Helvetica Neue", sans-serif);
+  --font-mono:    ui-monospace, "SFMono-Regular", "Cascadia Mono", "JetBrains Mono", monospace;
+
+  /* === RADIUS (DESIGN.md §3.5) === */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-pill: 999px;
+  --radius-circle: 50%;
+
+  /* === SHADOWS (DESIGN.md §3.6) === */
+  --shadow-xs: 0 1px 2px 0 rgba(36, 38, 93, 0.04);
+  --shadow-sm: 0 2px 4px -1px rgba(36, 38, 93, 0.06), 0 1px 2px -1px rgba(36, 38, 93, 0.04);
+  --shadow-md: 0 6px 12px -2px rgba(36, 38, 93, 0.08), 0 2px 4px -2px rgba(36, 38, 93, 0.05);
+  --shadow-lg: 0 18px 32px -8px rgba(36, 38, 93, 0.12), 0 8px 16px -4px rgba(36, 38, 93, 0.06);
+  --shadow-xl: 0 32px 64px -16px rgba(36, 38, 93, 0.18), 0 16px 32px -8px rgba(36, 38, 93, 0.08);
+  --shadow-focus-ring: 0 0 0 3px rgba(44, 56, 146, 0.32);
+
+  /* === Z-INDEX (DESIGN.md §3.8) === */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-header: 30;
+  --z-dropdown: 40;
+  --z-whatsapp: 50;
+  --z-modal: 60;
+  --z-popover: 70;
+  --z-toast: 80;
+  --z-cookie: 90;
+
+  /* === MOTION (DESIGN.md §3.9 — Emil principles) === */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-emphasis: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-instant: 0ms;
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --duration-medium: 240ms;
+  --duration-slow: 320ms;
+  --duration-decorative: 480ms;
+}
+
+/* === BASE === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink-900);
+  background: var(--color-bg);
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 0;
+  min-height: 100dvh;
+}
+
+/* === HEADINGS === */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1, h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+h3, h4, h5, h6 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+p {
+  margin: 0;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  /* text-wrap: pretty melhora rivers/widows em paragrafos longos.
+   * Suporte ~90% browsers atuais; falls back gracefully. */
+  text-wrap: pretty;
+}
+
+/* === LINKS ===
+ * Escopado para conteudo prose (politicas legais, blog, etc) — NAO afeta
+ * <a> renderizado por Button asChild ou Card asChild, que herdam color
+ * do componente pai (e.g. text-white em variant=primary).
+ */
+.prose-content a,
+article p a,
+article li a,
+main p > a,
+main li > a {
+  color: var(--color-primary-700);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.prose-content a:hover,
+article p a:hover,
+article li a:hover,
+main p > a:hover,
+main li > a:hover {
+  color: var(--color-primary-900);
+}
+
+/* === FOCUS === */
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus-ring);
+  border-radius: var(--radius-md);
+}
+
+/* === SELECTION === */
+::selection {
+  background: var(--color-primary-100);
+  color: var(--color-primary-900);
+}
+
+/* === IMAGES === */
+img, svg, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* === REDUCED MOTION (DESIGN.md §7.6) === */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* === KEYFRAMES (motion premium B2B — Hero) === */
+
+/* Ken Burns slow zoom: padrao cinematografico para hero photos.
+ * +30% movement (B2.2 owner): scale 1.05 -> 1.065, translate -1% -> -1.3%.
+ * Duracao mantida 32s (sobriedade — owner quer mais distancia, nao velocidade).
+ * GPU-only (transform). */
+@keyframes ken-burns {
+  0%   { transform: scale(1.0)   translate3d(0, 0, 0); }
+  50%  { transform: scale(1.065) translate3d(-1.3%, -1.3%, 0); }
+  100% { transform: scale(1.0)   translate3d(0, 0, 0); }
+}
+
+.ken-burns {
+  animation: ken-burns 32s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* Scroll hint bounce: convida a scrollar (chevron + label "scroll").
+ * Amplitude 10px + opacity pulse 0.5->1->0.5 para ser mais perceptivel. */
+@keyframes scroll-bounce {
+  0%   { transform: translateY(0);    opacity: 0.5; }
+  50%  { transform: translateY(10px); opacity: 1;   }
+  100% { transform: translateY(0);    opacity: 0.5; }
+}
+
+.animate-scroll-bounce {
+  animation: scroll-bounce 1.8s ease-in-out infinite;
+}
+
+/* Underline draw: keyframe (nao transition) para escapar do React batching
+ * que engole transitions de SVG attributes em prop change. forwards mantem
+ * estado final. */
+@keyframes draw-underline {
+  from { stroke-dashoffset: 220; }
+  to   { stroke-dashoffset: 0;   }
+}
+
+.animate-draw-underline {
+  animation: draw-underline 900ms cubic-bezier(0.16, 1, 0.3, 1) 600ms forwards;
+}
+
+/* Underline loop: draw + hold + erase + pause, 4s ciclo. Para CTA secundario
+ * 'Ver servicos' como afordancia animada de link (B2.2 owner). */
+@keyframes draw-underline-loop {
+  0%   { stroke-dashoffset: 220;  opacity: 0.3; }
+  20%  { stroke-dashoffset: 0;    opacity: 1;   }
+  60%  { stroke-dashoffset: 0;    opacity: 1;   }
+  80%  { stroke-dashoffset: -220; opacity: 0;   }
+  100% { stroke-dashoffset: -220; opacity: 0;   }
+}
+.animate-draw-underline-loop {
+  animation: draw-underline-loop 4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+/* Gradient breath ambient: glow cyan sutil pulsando atras do bloco de texto.
+ * Cor brand-300 (logo), alpha baixo, blend screen — cinematic ambient. */
+@keyframes gradient-breath {
+  0%, 100% { opacity: 0.55; transform: scale(1);    }
+  50%      { opacity: 1;    transform: scale(1.08); }
+}
+
+.animate-gradient-breath {
+  animation: gradient-breath 9s ease-in-out infinite;
+  transform-origin: 22% 80%;
+  will-change: opacity, transform;
+}
+
+/* Parallax via CSS scroll-driven animations (Chrome 115+, Edge 115+,
+ * Safari 17.4+). Fallback gracioso em browsers sem suporte (sem parallax,
+ * resto continua funcionando). Coexiste com Ken Burns: parallax atua no
+ * wrapper externo (.hero-parallax-bg), Ken Burns no wrapper interno
+ * (.ken-burns) — transforms em layers diferentes. */
+@supports (animation-timeline: scroll()) {
+  .hero-parallax-bg {
+    animation: hero-bg-translate linear;
+    animation-timeline: scroll(root);
+    animation-range: 0 100vh;
+    will-change: transform;
+  }
+  @keyframes hero-bg-translate {
+    to { transform: translateY(15%); }
+  }
+
+  .hero-parallax-text {
+    animation: hero-text-translate linear;
+    animation-timeline: scroll(root);
+    animation-range: 0 100vh;
+    will-change: transform, opacity;
+  }
+  @keyframes hero-text-translate {
+    to { transform: translateY(-8%); opacity: 0.4; }
+  }
+}
+
+/* === KEYFRAMES (Wave 1 Phase B — UI primitives) === */
+
+/* Checkbox indicator entrance: scale 0.9 -> 1 + opacity 0 -> 1 (NUNCA scale 0). */
+@keyframes checkbox-in {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* Accordion height (Radix entrega --radix-accordion-content-height). */
+@keyframes accordion-down {
+  from { height: 0; opacity: 0; }
+  to   { height: var(--radix-accordion-content-height); opacity: 1; }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); opacity: 1; }
+  to   { height: 0; opacity: 0; }
+}
+
+/* Dialog overlay fade. */
+@keyframes dialog-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes dialog-overlay-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* Dialog content scale 0.96 -> 1 + opacity. transform-origin center (Emil exception). */
+@keyframes dialog-content-in {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1);    }
+}
+@keyframes dialog-content-out {
+  from { opacity: 1; transform: translate(-50%, -50%) scale(1);    }
+  to   { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
+}
+
+/* Tooltip scale 0.95 -> 1 + opacity 0 -> 1. transform-origin via Radix CSS var. */
+@keyframes tooltip-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+@keyframes tooltip-out {
+  from { opacity: 1; transform: scale(1);    }
+  to   { opacity: 0; transform: scale(0.95); }
+}
+
+/* === KEYFRAMES (Wave 2 Phase B — layout chrome) === */
+
+/* Mega-menu enter/exit (Header NavigationMenu). */
+@keyframes mega-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+@keyframes mega-out {
+  from { opacity: 1; transform: translateY(0);    }
+  to   { opacity: 0; transform: translateY(-4px); }
+}
+
+/* Mobile drawer slide da direita. */
+@keyframes drawer-slide-in {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0);    }
+}
+@keyframes drawer-slide-out {
+  from { transform: translateX(0);    }
+  to   { transform: translateX(100%); }
+}
+
+/* WhatsApp floater mount: scale 0.9 -> 1 + opacity. Delay 600ms (apos hero). */
+@keyframes whatsapp-mount {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1);   }
+}
+
+/* Cookie banner enter: opacity + translateY 20px -> 0. */
+@keyframes cookie-banner-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Spinner — 720ms padrao. Reduced-motion: 1500ms (NAO desabilitar). */
+@keyframes spinner-rotate {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+.animate-spinner-rotate {
+  animation: spinner-rotate 720ms linear infinite;
+  transform-origin: center;
+}
+.motion-reduce\:animate-spinner-rotate-slow {
+  /* Tailwind nao tem este utility nativo — provido aqui. */
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-spinner-rotate,
+  .motion-reduce\:animate-spinner-rotate-slow {
+    animation: spinner-rotate 1500ms linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ken-burns,
+  .animate-scroll-bounce,
+  .animate-draw-underline,
+  .animate-gradient-breath,
+  .hero-parallax-bg,
+  .hero-parallax-text {
+    animation: none;
+  }
+  /* Garantir underline visivel em reduced-motion (sem animacao,
+   * stroke-dashoffset deveria ficar no inline 220 — forcar 0). */
+  .animate-draw-underline {
+    stroke-dashoffset: 0 !important;
+  }
+  .animate-draw-underline-loop {
+    animation: none;
+    stroke-dashoffset: 0 !important;
+    opacity: 1 !important;
+  }
+}
+
+/* === UTILS PRÓPRIOS === */
+.container-site {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+@media (min-width: 640px) {
+  .container-site { padding-inline: 32px; }
+}
+
+@media (min-width: 1024px) {
+  .container-site {
+    max-width: 1120px;
+    padding-inline: 40px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-site {
+    max-width: 1200px;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* shadcn semantic tokens — only those NOT colliding with our own. Our DESIGN.md tokens above (--color-primary-*, --color-ink-*, --radius-*) take precedence; the variables below provide Tailwind utility shims like bg-muted/text-foreground that shadcn blocks rely on. */
+@theme inline {
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+}
+
+/* === SHADCN-COMPAT TOKENS (mapeados para brand Sanetech) ===
+ * shadcnblocks blocks use bg-background, text-foreground, bg-secondary,
+ * text-muted-foreground, border-border, ring-ring etc. Aqui mapeamos
+ * essas vars CSS shadcn para nossos brand colors do DESIGN.md, para que
+ * blocks pluggem direto no nosso visual sem ajustes.
+ */
+:root {
+  /* Surfaces — tinted (impeccable: nunca #fff puro) */
+  --background: #FAFAFC;
+  --foreground: #0E1024;             /* = ink-900 */
+
+  --card: #FFFFFF;                   /* card pode ficar branco puro p/ contrastar com bg tinted */
+  --card-foreground: #0E1024;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #0E1024;
+
+  /* Primary (action color) */
+  --primary: #2c3892;                /* = primary-700 */
+  --primary-foreground: #FFFFFF;
+
+  /* Secondary (neutro suave) */
+  --secondary: #F6F7FB;              /* = ink-50 */
+  --secondary-foreground: #0E1024;
+
+  /* Muted (texto auxiliar / fundo discreto) */
+  --muted: #F6F7FB;
+  --muted-foreground: #6E739A;       /* = ink-500 */
+
+  /* Accent (hover surface) */
+  --accent: #E8F8FF;                 /* = primary-50 */
+  --accent-foreground: #24265d;      /* = primary-900 */
+
+  /* Destructive */
+  --destructive: #B5302A;            /* = danger */
+  --destructive-foreground: #FFFFFF;
+
+  /* Border / Input / Ring */
+  --border: #D7DAE8;                 /* = ink-200 */
+  --input: #D7DAE8;
+  --ring: #2c3892;                   /* = primary-700 */
+
+  /* Chart palette (Sanetech) */
+  --chart-1: #2c3892;
+  --chart-2: #5BA8D9;
+  --chart-3: #3F4FB8;
+  --chart-4: #24265d;
+  --chart-5: #BFE3F2;
+
+  /* Radius alias (shadcn convention) */
+  --radius: 0.5rem;
+
+  /* Sidebar (placeholder — projeto nao usa sidebar shadcn ainda) */
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #0E1024;
+  --sidebar-primary: #2c3892;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #E8F8FF;
+  --sidebar-accent-foreground: #24265d;
+  --sidebar-border: #D7DAE8;
+  --sidebar-ring: #2c3892;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* shadcn default @layer base block intentionally omitted: our own html/body/* base styles
+   (above) define typography, background and focus from DESIGN.md tokens, so re-applying
+   bg-background text-foreground font-sans here would override them. */
