@@ -2,4 +2,6 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/sanete10/public_html/
-    - /bin/cp -r * $DEPLOYPATH
+    - /usr/local/bin/npm install
+    - /usr/local/bin/npm run build
+    - /bin/cp -r .next/* $DEPLOYPATH
